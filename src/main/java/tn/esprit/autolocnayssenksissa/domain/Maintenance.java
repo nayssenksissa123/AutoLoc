@@ -1,8 +1,8 @@
 package tn.esprit.autolocnayssenksissa.domain;
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -12,14 +12,21 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
-
 public class Maintenance {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMaintenance;
 
     private LocalDate dateDebut;
+
     private LocalDate dateFin;
+
     private String description;
 
+    // Plusieurs maintenances peuvent concerner un véhicule
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_vehicule")
+    @ToString.Exclude
+    private Vehicule vehicule;
 }

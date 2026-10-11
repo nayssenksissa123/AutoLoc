@@ -1,8 +1,8 @@
 package tn.esprit.autolocnayssenksissa.domain;
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -10,15 +10,22 @@ import java.math.BigDecimal;
 @Builder
 @ToString
 @Entity
-
 public class Employe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmploye;
 
     private String nom;
+
     private String prenom;
 
     @Enumerated(EnumType.STRING)
     private RoleEmploye role;
+
+    // Plusieurs employés peuvent appartenir à une agence
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_agence")
+    @ToString.Exclude
+    private Agence agence;
 }

@@ -2,8 +2,8 @@ package tn.esprit.autolocnayssenksissa.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,9 +13,15 @@ import java.time.LocalDate;
 @ToString
 @Entity
 public class Equipement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEquipement;
 
     private String libelle;
+
+    @Builder.Default
+    @ManyToMany(mappedBy = "equipements", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<Vehicule> vehicules = new HashSet<>();
 }

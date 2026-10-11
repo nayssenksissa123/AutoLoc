@@ -1,9 +1,11 @@
 package tn.esprit.autolocnayssenksissa.domain;
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,22 +14,31 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
-
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idClient;
 
     private String nom;
+
     private String prenom;
 
-    @Column(unique = true)
     private String email;
 
     private String telephone;
 
-    @Column(unique = true)
     private String numPermis;
 
     private LocalDate dateInscription;
+
+    // Un client peut avoir plusieurs réservations
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "client",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    @ToString.Exclude
+    private List<Reservation> reservations = new ArrayList<>();
 }

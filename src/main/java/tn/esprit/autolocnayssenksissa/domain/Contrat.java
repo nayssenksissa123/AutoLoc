@@ -1,9 +1,12 @@
 package tn.esprit.autolocnayssenksissa.domain;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,17 +15,32 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
-
-
 public class Contrat {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idContrat;
 
     private LocalDate dateSignature;
 
-    @Column(precision = 10, scale = 2)
     private BigDecimal montantTotal;
 
-    private Boolean valide;
+    private boolean valide;
+
+    // Association Contrat - Reservation : OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_reservation", unique = true)
+    @ToString.Exclude
+    private Reservation reservation;
+
+    // Association Contrat - Paiement : OneToMany
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "contrat",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @ToString.Exclude
+    private List<Paiement> paiements = new ArrayList<>();
 }

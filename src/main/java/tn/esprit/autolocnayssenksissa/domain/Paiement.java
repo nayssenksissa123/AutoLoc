@@ -1,4 +1,5 @@
 package tn.esprit.autolocnayssenksissa.domain;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,6 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
-
 public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +25,9 @@ public class Paiement {
 
     @Enumerated(EnumType.STRING)
     private ModePaiement modePaiement;
+
+    @ManyToOne
+    @JoinColumn(name = "contrat_id")
+    @ToString.Exclude
+    private Contrat contrat;
 }
