@@ -19,12 +19,12 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public void supprimerClient(int id) {
+    public void supprimerClient(Long id) {
         clientRepo.deleteById(id);
     }
 
     @Override
-    public Client recupererClient(int id) {
+    public Client recupererClient(Long id) {
         return clientRepo.findById(id).orElse(null);
     }
 

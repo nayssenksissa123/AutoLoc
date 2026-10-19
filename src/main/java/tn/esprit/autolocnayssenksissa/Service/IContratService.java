@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface IContratService {
     Contrat ajouter(Contrat contrat);
-    void supprimerContrat(int id);
-    Contrat recupererContrat(int id);
+    void supprimerContrat(Long id);
+    Contrat recupererContrat(Long id);
     List<Contrat> recupererContrats();
     Contrat updateContrat(Contrat c);
 }
